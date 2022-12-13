@@ -63,10 +63,10 @@ public class Veiculo {
     
     }
 
-	public static void removeVeiculo(int idVeiculo) throws Exception {
-        Veiculo veiculo = getVeiculo(idVeiculo);
-        veiculo.remove(veiculo);
-	}
+	public static void removeVeiculo(int id) throws Exception{
+        Veiculo veiculo = getVeiculo(id);
+        veiculos.remove(veiculo);
+    }
 }
 
 
