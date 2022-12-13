@@ -33,7 +33,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `estacionamentoCRUD`.`veiculo` (
   `idveiculo` INT NOT NULL,
-  `nome` VARCHAR(45) NOT NULL,
   `marca` VARCHAR(45) NULL,
   `modelo` VARCHAR(45) NULL,
   `estacionamento_idEstacionamento` INT NOT NULL,
