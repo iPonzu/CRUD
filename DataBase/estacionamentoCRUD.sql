@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `estacionamentoCRUD`.`veiculo` (
   `modelo` VARCHAR(45) NULL,
   `estacionamento_idEstacionamento` INT NOT NULL,
   PRIMARY KEY (`idveiculo`, `estacionamento_idEstacionamento`),
-  INDEX `fk_veiculo_estacionamento_idx` (`estacionamento_idEstacionamento` ASC) VISIBLE,
+  INDEX `fk_veiculo_estacionamento_idx` (`estacionamento_idEstacionamento` ASC),
   CONSTRAINT `fk_veiculo_estacionamento`
     FOREIGN KEY (`estacionamento_idEstacionamento`)
     REFERENCES `estacionamentoCRUD`.`estacionamento` (`idEstacionamento`)

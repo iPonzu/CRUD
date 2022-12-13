@@ -39,4 +39,7 @@ public class Estacionamento{
     public void setSetor(String setor){
         this.setor = setor;
     }
+
+
+    
 }
