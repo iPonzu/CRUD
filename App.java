@@ -31,7 +31,7 @@ public class App{
                     cadastrarVeiculo(scanner);
                     break;
                 case 2:
-                    listarVeiculo();
+                    Veiculo.listarVeiculo();
                     break;
                 case 3:
                     removeVeiculo(scanner);
@@ -39,7 +39,7 @@ public class App{
                     cadastrarEstacionamento(scanner); //estacionamento = vaga
                     break; 
                 case 5:
-                    listarEstacionamento();
+                    Estacionamento.listarEstacionamento();
                     break;
                 case 6:
                     removeEstacionamento(scanner);
@@ -96,8 +96,6 @@ public class App{
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-
-            
         }
     
 
