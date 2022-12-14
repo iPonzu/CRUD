@@ -1,20 +1,23 @@
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 import javax.swing.SwingUtilities;
 
 public class App{
     public static void main(String[] args) throws SQLException {
-    
         Scanner scanner = new Scanner(System.in);
         int op = 0;
-
         do{
+        System.out.println("__________________________________________");
         System.out.println("Bem vindo ao estacionamento");
         System.out.println("Escolha uma opção");
         System.out.println("1 - Cadastrar veículo");
         System.out.println("2 - Listar veículo");
         System.out.println("3 - Excluir veículo");
-
+        System.out.println("4 - Cadastrar vaga");
+        System.out.println("5 - Listar vaga");
+        System.out.println("6 - Excluir vaga");
+        System.out.println("__________________________________________");
 
 
         try {
@@ -41,7 +44,6 @@ public class App{
                 case 6:
                     removeEstacionamento(scanner);
                     break;
-
                 }   
         }while(op!= 0);
         scanner.close();
@@ -70,17 +72,16 @@ public class App{
             }
             
         }
-        private static void removeVeiculo(Scanner scanner) {
-            System.out.println("Remover Veiculo");
-            System.out.println("Digite seu ID: ");
-            int idVeiculo = scanner.nextInt();
-            try {
-                Veiculo.getVeiculo(idVeiculo);
-            } catch (Exception e) {
-                System.out.println("Erro ao remover o veiculo, tente novamente!" + e.getMessage());
-            }
-            
+        private static void removeVeiculo(Scanner scanner) throws SQLException {
+            PreparedStatement stmt = DAO.createConnection().prepareStatement(
+                "DELETE FROM Veiculo WHERE id = ?;"
+            );
+            stmt.setInt(1, 0);
+            stmt.execute();
+            stmt.close();
         }
+            
+        
         
         public static void cadastrarEstacionamento(Scanner scanner) throws SQLException {
             try {
@@ -90,26 +91,27 @@ public class App{
                 int vaga = scanner.nextInt();
                 System.out.println("Insira seu setor: ");
                 String setor = scanner.next();
+
+                new Estacionamento(id, vaga, setor);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
-            new Estacionamento(0, 0, null);
+            
         }
     
 
         private static void listarEstacionamento() {
-            System.out.println("Listar vagas do estacionamento");
             for(Estacionamento estacionamento : Estacionamento.estacionamentos){
                 System.out.println(estacionamento);
             }
         }
-        public static void removeEstacionamento(Scanner scanner) {
+        public static void removeEstacionamento(Scanner scanner) throws SQLException {
             try {
-                System.out.println("Remover vaga de estacionamento");
-                System.out.println("Digite o número da vaga: ");
-                int vaga = scanner.nextInt();
-                System.out.println("Vaga removida com sucesso!");
+                System.out.println("Informe o ID da vaga: ");
+                int id = scanner.nextInt();
+                Estacionamento.removeEstacionamento(id);
+                System.out.println("Removido com êxito");
             } catch (Exception e) {
                 // TODO: handle exception
                 System.out.println(e.getMessage());

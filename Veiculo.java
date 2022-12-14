@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Veiculo {
     
@@ -11,6 +12,8 @@ public class Veiculo {
     private String modelo;
     
     private int idEstacionamento;
+    
+    public static ArrayList<Veiculo> veiculos = new ArrayList<>();
 
     public Veiculo(
         int id,
@@ -18,13 +21,24 @@ public class Veiculo {
         String marca,
         String modelo,
         Estacionamento estacionamento
-    ){
+
+    )throws SQLException{
         
         this.id = id;
         this.nome = nome;
         this.marca = marca;
         this.modelo = modelo;
         this.idEstacionamento = estacionamento.getId();
+
+        PreparedStatement stmt = DAO.createConnection().prepareStatement(
+            "INSERT INTO (nome, marca, modelo) VALUES (?,?,?) "
+        );
+        stmt.setInt(1, id);
+        stmt.setString(2, nome);
+        stmt.setString(3, marca);
+        stmt.setString(4, modelo);
+        stmt.execute();
+        stmt.close();
         
     }
     public int getId(){
@@ -62,18 +76,40 @@ public class Veiculo {
         throw new Exception("Veiculo não encontrado");
     
     }
-
-	public static void removeVeiculo(int id) throws Exception{
-        Veiculo veiculo = getVeiculo(id);
-        veiculos.remove(veiculo);
+    public static void listarVeiculo() throws SQLException {
+        Connection connection = DAO.createConnection();
+        ResultSet rs = connection.createStatement().executeQuery(
+            "SELECT * FROM Veiculo;"
+        );
+        while(rs.next()){
+            System.out.println(
+                "ID: " + rs.getInt("id") +
+                "Nome: " + rs.getString("nome") +
+                "Marca: " + rs.getString("marca") +
+                "Modelo: " + rs.getString("modelo")
+            );
+        }
     }
-}
 
+	public static void removeVeiculo(int id) throws SQLException{
+        PreparedStatement stmt = DAO.createConnection().prepareStatement(
+            "DELETE FROM Veiculo WHERE id = ?;"
+        );
+        stmt.setInt(1, id);
+        stmt.execute();
+        stmt.close();
+    }
 
-@Override
-public String toString(){
+    @Override
+    public String toString(){
     return "ID: " + id + "\n"
     + "Nome: " + nome + "\n"
     + "Marca: " + marca + "\n"
     + "Modelo: " + modelo + "\n";  
+    }
+
+
 }
+
+
+
