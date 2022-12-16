@@ -21,7 +21,7 @@ USE `estacionamentoCRUD` ;
 -- Table `estacionamentoCRUD`.`estacionamento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `estacionamentoCRUD`.`estacionamento` (
-  `idEstacionamento` INT NOT NULL AUTO_INCREMENT,
+  `idEstacionamento` INT NOT NULL ,
   `vaga` INT NOT NULL,
   `setor` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idEstacionamento`))
@@ -49,3 +49,6 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+

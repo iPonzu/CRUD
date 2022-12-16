@@ -2,114 +2,108 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class Veiculo {
-    
-    private int id;
-    private String nome;
+
+    private int idVeiculo;
     private String marca;
     private String modelo;
-    
     private int idEstacionamento;
-    
-    public static ArrayList<Veiculo> veiculos = new ArrayList<>();
+
 
     public Veiculo(
-        int id,
-        String nome,
+        int idVeiculo,
         String marca,
-        String modelo,
-        Estacionamento estacionamento
+        String modelo
 
     )throws SQLException{
-        
-        this.id = id;
-        this.nome = nome;
+
+        this.idVeiculo = idVeiculo;
         this.marca = marca;
         this.modelo = modelo;
-        this.idEstacionamento = estacionamento.getId();
+        this.idEstacionamento = idEstacionamento;
 
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "INSERT INTO (nome, marca, modelo) VALUES (?,?,?) "
+            "INSERT INTO Veiculo (idVeiculo, marca, modelo, estacionamento_idEstacionamento) VALUES (?, ?, ?, ?)"
         );
-        stmt.setInt(1, id);
-        stmt.setString(2, nome);
-        stmt.setString(3, marca);
-        stmt.setString(4, modelo);
+        stmt.setInt(1, idVeiculo);
+        stmt.setString(2, marca);
+        stmt.setString(3, modelo);
+        stmt.setInt(1, 1);
         stmt.execute();
         stmt.close();
-        
-    }
-    public int getId(){
-        return id;
-    }
-    public String getNome(){
-        return nome;
-    }
-    public String getMarca(){
-        return marca;
-    }
-    public String getModelo(){
-        return modelo;
-    }
-    public void setId(){
-        this.id = id;
-    }
-    public void setNome(){
-        this.nome = nome;
-    }
-    public void setMarca(){
-        this.marca = marca;
-    }
-    public void setModelo(){
-        this.modelo = modelo;
-    }
-    
-    
-    public static Veiculo getVeiculo(int id) throws Exception {
-        for(Veiculo veiculo : veiculos){
-            if(veiculo.getId() == id){
-                return veiculo;
-            }
-        }
-        throw new Exception("Veiculo não encontrado");
-    
-    }
-    public static void listarVeiculo() throws SQLException {
-        Connection connection = DAO.createConnection();
-        ResultSet rs = connection.createStatement().executeQuery(
+    } 
+
+    public static void listarVeiculo() throws SQLException{
+        Connection connec = DAO.createConnection();
+        ResultSet rs = connec.createStatement().executeQuery(
             "SELECT * FROM Veiculo;"
         );
         while(rs.next()){
             System.out.println(
-                "ID: " + rs.getInt("id") +
-                "Nome: " + rs.getString("nome") +
-                "Marca: " + rs.getString("marca") +
-                "Modelo: " + rs.getString("modelo")
+                "ID: " + rs.getInt("idVeiculo") + 
+                "Descrição: " + rs.getString("marca") + 
+                "modelo: " + rs.getString("modelo")  
             );
         }
     }
 
-	public static void removeVeiculo(int id) throws SQLException{
+    public static void updateVeiculo(int idVeiculo, String marca, String modelo) throws SQLException {
         PreparedStatement stmt = DAO.createConnection().prepareStatement(
-            "DELETE FROM Veiculo WHERE id = ?;"
+            "UPDATE Veiculo SET id = ?, marca = ?, modelo = ? WHERE id = ?;"
         );
-        stmt.setInt(1, id);
+        stmt.setInt(1, idVeiculo);   
+        stmt.setString(2, marca);  
+        stmt.setString(3, modelo);  
+        stmt.close(); 
+        stmt.execute();
+    }
+
+    public static void deleteVeiculo(int idVeiculo) throws SQLException{
+        PreparedStatement stmt = DAO.createConnection().prepareStatement(
+            "DELETE FROM Veiculo WHERE idVeiculo = ?;"
+        );
+        stmt.setInt(1, idVeiculo);
         stmt.execute();
         stmt.close();
+    }
+    
+    public int getidVeiculo(){
+        return idVeiculo;
+    }
+    public void setId(int idVeiculo){
+        this.idVeiculo = idVeiculo;
+    }
+    public String getmarca(){
+        return marca;
+    }
+    public void setmarca(String marca){
+        this.marca = marca;
+    }
+    public String getmodelo(){
+        return modelo;
+    }
+    public void setmodelo(String modelo){
+        this.modelo = modelo;
+    }
+    public void idEstacionamento(int idEstacionamento){
+        this.idEstacionamento = idEstacionamento;
     }
 
     @Override
     public String toString(){
-    return "ID: " + id + "\n"
-    + "Nome: " + nome + "\n"
-    + "Marca: " + marca + "\n"
-    + "Modelo: " + modelo + "\n";  
+        return "Id: " + idVeiculo + "\n"
+        + "Descrição: " + marca + "\n"
+        + "modelo: " + modelo + "\n";
+    } 
+
+    @Override 
+    public boolean equals (Object object){
+        if(object == null || !(object instanceof Veiculo)){
+            return false;
+        }
+        final Veiculo other = (Veiculo) object;
+
+        return this.getidVeiculo() == other.getidVeiculo();
     }
-
-
 }
-
-
-

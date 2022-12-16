@@ -1,62 +1,60 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+// import java.sql.Connection;
+// import java.sql.PreparedStatement;
+// import java.sql.ResultSet;
 
-public class ConnectionDB {
-    public static void main(String[] args) {
-        try{
-            Connection connection = DAO.createConnection();
-            // Usuario usuario = new Usuario("lucas.doces", "Lucas dos Doces", "773");
+// public class ConnectionDB {
 
-            /* INSERT Usuário */
-            /*PreparedStatement stmt = connection.prepareStatement(
-                "INSERT INTO usuario (user_name, name, password) VALUES (?, ?, ?);"
-            );
-            stmt.setString(1, usuario.getUserName());
-            stmt.setString(2, usuario.getName());
-            stmt.setString(3, usuario.getPassword());
-            stmt.execute();*/
+//     public static void main(String[] args) {
+//         try {
+//             Connection connec = DAO.createConnection();
+//             // Usuario usuario = new Usuario("manezinho.ilha", "Manézinho da ilha", "347");
 
-            /* SELECT ALL USERS */
-            imprimirUsuarios(connection);
+//             /* INSERT Usuário */
+//             /* PreparedStatement stmt = connec.preparedStatement(
+//                 "INSERT INTO usuario (username, name, password) VALUES (?,?,?)"
+//             );
+//             stmt.setString(1, usuario.getUsername());
+//             stmt.setString(2, usuario.getName());
+//             stmt.setString(3, usuario.getPassword());
+//             stmt.execute();*/
 
-            /* DELETE id = 2 */
-            PreparedStatement stmt = connection.prepareStatement(
-                "DELETE FROM usuario WHERE id = ?;"
-            );
-            stmt.setInt(1, 2);
-            stmt.execute();
-            imprimirUsuarios(connection);
+//             /* SELECT ALL USERS */
+//             imprimirUsuarios(connec);
 
-            /* UPDATE id = 1 */
-            stmt = connection.prepareStatement(
-                "UPDATE usuario SET user_name = ?, name = ?, password = ? WHERE id = ?;"
-            );
-            stmt.setString(1, "tia.bolos");
-            stmt.setString(2, "Tia dos Bolos");
-            stmt.setString(3, "123457");
-            stmt.setInt(4, 1);
-            stmt.execute();
-            imprimirUsuarios(connection);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        
-    }
+//             /* DELETE id = 2 */
+//             PreparedStatement stmt = connec.prepareStatement(
+//                 "DELETE FROM usuario WHERE id =?;"
+//             );    
 
-    public static void imprimirUsuarios(Connection connection) throws Exception {
-        ResultSet rs = connection.createStatement().executeQuery(
-            "SELECT * FROM usuario;"
-        );
-        while(rs.next()){
-            User usuario2 = new Usuario(
-                rs.getInt("id"), 
-                rs.getString("user_name"),
-                rs.getString("name"),
-                rs.getString("password")
-            );
-            System.out.println(usuario2);
-            System.out.println("-------------------------------");
-        }
-    }
-}
+//             /* UPDATE id = 1 */
+//             stmt = connec.prepareStatement(
+//                 "UPDATE usuario SET username = ?, name =?, password =? WHERE id =?"
+ 
+//             );
+//             stmt.setString(1, "jorge.pneu");
+//             stmt.setString(2, "Jorge dos pneus");
+//             stmt.setString(3, "654321");
+//             stmt.setInt(4, 1);
+//             stmt.execute();
+//             imprimirUsuarios(connec);
+//         }catch (Exception e){
+//             System.out.println(e);
+//         }
+//     }
+
+//     private static void imprimirUsuarios(Connection connec) throws Exception {
+//         ResultSet rs = connec.createStatement().executeQuery(
+//             "SELECT * FROM usuario;"
+//         );
+//         while (rs.next()) {
+//             Usuario usuario2 = new Usuario(
+//                 rs.getInt("id"),
+//                 rs.getString("username"),
+//                 rs.getString("name"),
+//                 rs.getString("password")
+//             );
+//             System.out.println(usuario2);
+//             System.out.println("===============================");
+//         }
+//     }
+// }
